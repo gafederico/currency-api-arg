@@ -37,27 +37,24 @@ In Python, we use Virtual Environments instead of global NuGet packages to keep 
    ```
 
 2. **Create and activate a Virtual Environment:**
-```bash
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# Linux/macOS
-source .venv/bin/activate
-```
+   ```bash
+   python -m venv .venv
+   # Windows
+   .venv\Scripts\activate
+   # Linux/macOS
+   source .venv/bin/activate
+   ```
 
 3. **Install Dependencies:**
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## 🏃 Running the API
-
 Start the development server with hot-reload enabled:
-
-```bash
-uvicorn main:app --reload
-
-```
+   ```bash
+   uvicorn main:app --reload
+   ```
 
 * **API Base**: `http://127.0.0.1:8000`
 * **Swagger Docs**: `http://127.0.0.1:8000/docs` (Interactive UI)
@@ -65,18 +62,15 @@ uvicorn main:app --reload
 ## 🧪 Testing
 
 The project uses `pytest` for automated integration tests.
-
 To run all tests:
-
-```bash
-pytest
-```
+   ```bash
+   pytest
+   ```
 
 To see detailed output (including print statements):
-
-```bash
-pytest -s
-```
+   ```bash
+   pytest -s
+   ```
 
 ## 📖 API Documentation
 

@@ -7,7 +7,7 @@ app = FastAPI()
 
 # Configuration
 BASE_URL = "https://dolarapi.com/v1"
-HISTORICAL_URL = "https://api.argentinadatos.com/v1/cotizaciones/dolares"
+HISTORICAL_URL = "https://api.argentinadatos.com/v1/cotizaciones/dolares/"
 
 # Map for user convenience
 MONEDA_MAP = {
@@ -34,20 +34,40 @@ async def get_current(type: str = "oficial"):
 
 @app.get("/average")
 async def get_average(dateStart: str, dateEnd: str, type: str = "oficial"):
-    """Calculates historical average of 'venta' for a dollar type."""
+    """Calculates historical average using LINQ-style comprehensions."""
+    # 1. Map user-friendly types to API types
+    casa_map = {"ccl": "contadoconliqui", "mep": "bolsa"}
+    casa = casa_map.get(type.lower(), type.lower())
+
     async with httpx.AsyncClient() as client:
-        r = await client.get(HISTORICAL_URL)
-        data = [x for x in r.json() if x["casa"] == type.lower()]
-        
-        start = datetime.strptime(dateStart, "%Y-%m-%d").date()
-        end = datetime.strptime(dateEnd, "%Y-%m-%d").date()
-        
-        prices = [d["venta"] for d in data if start <= datetime.strptime(d["fecha"], "%Y-%m-%d").date() <= end]
-        
+        r = await client.get(HISTORICAL_URL, headers={"User-Agent": "FastAPI-App"})
+        r.raise_for_status()
+        data = r.json()
+
+        # 2. Date Parsing Helper (Standardizing the input)
+        try:
+            fmt = "%d/%m/%Y" if "/" in dateStart else "%Y-%m-%d"
+            start = datetime.strptime(dateStart, fmt).date()
+            end = datetime.strptime(dateEnd, fmt).date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid date format. Use DD/MM/YYYY")
+
+        # 3. THE "LINQ" PART: Where (filter) and Select (map) in one line
+        # This is equivalent to: data.Where(d => d.casa == casa && date range).Select(d => d.venta) in C#
+        prices = [
+            d["venta"] for d in data 
+            if d["casa"] == casa and 
+            start <= datetime.strptime(d["fecha"], "%Y-%m-%d").date() <= end
+        ]
+
         if not prices:
-            raise HTTPException(status_code=404, detail="No data for this range")
+            raise HTTPException(status_code=404, detail="No records found.")
             
-        return {"average": round(mean(prices), 2), "days": len(prices)}
+        return {
+            "average": round(mean(prices), 2),
+            "days": len(prices),
+            "type": type.lower()
+}
 
 @app.get("/convert")
 async def convert(

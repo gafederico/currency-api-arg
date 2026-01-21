@@ -1,4 +1,4 @@
-# 🇦🇷 CurrencyAPI Argentina
+# CurrencyAPI Argentina
 
 A high-performance, asynchronous API built with **Python** and **FastAPI** to track Argentine currency exchange rates (Official, Blue, MEP, CCL) and perform universal conversions.
 

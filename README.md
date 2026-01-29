@@ -37,7 +37,7 @@ This project is organized as a **Monorepo**:
 
 ### 1. Clone the repo
 ```bash
-git clone [https://github.com/gafederico/currency-api-arg.git](https://github.com/gafederico/currency-api-arg.git)
+git clone https://github.com/gafederico/currency-api-arg.git
 cd currency-api-arg
 ```
 

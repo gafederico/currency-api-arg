@@ -7,7 +7,8 @@
             "request": "launch",
             "module": "uvicorn",
             "args": ["main:app", "--reload"],
-            "jinja": true
+            "jinja": true,
+            "cwd": "${workspaceFolder}/backend"
         }
     ]
 }

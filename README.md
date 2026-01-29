@@ -1,95 +1,131 @@
-# CurrencyAPI Argentina
+# CurrencyAPI Argentina Fullstack
 
-A high-performance, asynchronous API built with **Python** and **FastAPI** to track Argentine currency exchange rates (Official, Blue, MEP, CCL) and perform universal conversions.
+A complete Full Stack solution built with **Python (FastAPI)** and **React (TypeScript)** to track Argentine currency exchange rates (Official, Blue, MEP, CCL), calculate historical averages, and perform universal conversions.
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 ## 🚀 Features
 
-- **Current Rates**: Real-time buy/sell prices for all dollar types (Oficial, Blue, Bolsa, etc.).
-- **Historical Averages**: Calculate average exchange rates between two dates using LINQ-style logic.
-- **Universal Converter**: Convert between USD, ARS, EUR, and more (automatically uses the specified dollar type for conversions).
-- **Async Architecture**: Non-blocking requests using `httpx` for maximum performance.
-- **Auto-Documentation**: Built-in Swagger UI and ReDoc support.
+### Backend (Python)
+- **Real-time Rates**: Live buy/sell prices for all dollar types via `dolarapi.com`.
+- **Historical Analysis**: "LINQ-style" average calculation over custom date ranges.
+- **Universal Converter**: Smart conversion (e.g., USD -> EUR) using specific Argentine exchange rates.
+- **Async Core**: Built on `httpx` for non-blocking high performance.
+
+### Frontend (React + TS)
+- **Dashboard**: Card-based view of all current exchange rates.
+- **Interactive Tools**: Date pickers for historical analysis and a universal currency converter.
+- **Responsive UI**: Adapts to mobile and desktop with a modern dark mode.
 
 ## 🛠️ Tech Stack
 
-- **Framework**: FastAPI
-- **Testing**: Pytest & Pytest-asyncio
+* **Backend:** FastAPI, Python 3.10+, Uvicorn, Pytest.
+* **Frontend:** React 18, TypeScript, Vite, CSS Modules/Grid.
+
+---
 
 ## ⚙️ Setup & Installation
 
-### Prerequisites
-- Python 3.14+
-- VS Code (Recommended)
+This project is organized as a **Monorepo**:
+* `/backend`: Python API
+* `/frontend`: React Application
 
-### Local Environment
+### 1. Clone the repo
+```bash
+git clone [https://github.com/gafederico/currency-api-arg.git](https://github.com/gafederico/currency-api-arg.git)
+cd currency-api-arg
+```
 
-1. **Clone the repo:**
-   ```bash
-   git clone https://github.com/gafederico/currency-api-arg.git
-   cd currency-api-arg
-   ```
+### 2. Backend Setup
 
-2. **Create and activate a Virtual Environment:**
-   ```bash
-   python -m venv .venv
-   # Windows
-   .venv\Scripts\activate
-   # Linux/macOS
-   source .venv/bin/activate
-   ```
+```bash
+cd backend
+python -m venv .venv
 
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Activate Virtual Environment
+# Windows:
+.venv\Scripts\activate
+# Linux/macOS:
+source .venv/bin/activate
 
-## 🏃 Running the API
-Start the development server with hot-reload enabled:
-   ```bash
-   uvicorn main:app --reload
-   ```
+# Install Dependencies
+pip install -r requirements.txt
+```
 
-* **API Base**: `http://127.0.0.1:8000`
-* **Swagger Docs**: `http://127.0.0.1:8000/docs` (Interactive UI)
+### 3. Frontend Setup
 
-## 🧪 Testing
+Open a new terminal in the root folder:
 
-The project uses `pytest` for automated integration tests.
-To run all tests:
-   ```bash
-   pytest
-   ```
+```bash
+cd frontend
+npm install
+```
 
-To see detailed output (including print statements):
-   ```bash
-   pytest -s
-   ```
+---
+
+## 🏃 Running the App
+
+You need to run both the backend and frontend terminals simultaneously.
+
+### Terminal 1: Backend API
+
+```bash
+cd backend
+# Runs on [http://127.0.0.1:8000](http://127.0.0.1:8000)
+uvicorn main:app --reload
+```
+
+### Terminal 2: Frontend Client
+
+```bash
+cd frontend
+# Runs on http://localhost:5173
+npm run dev
+```
+
+Visit **`http://localhost:5173`** to use the application.
+
+---
 
 ## 📖 API Documentation
+
+The API provides auto-generated documentation via Swagger UI at `http://127.0.0.1:8000/docs`.
 
 ### GET `/current`
 
 Returns current rates.
 
-* `type`: (Optional) `oficial`, `blue`, `bolsa`, `ccl`. Default: `oficial`.
+* `type`: (Optional) `oficial`, `blue`, `bolsa`, `ccl`, `cripto`, `tarjeta`.
+* **Tip:** Use `type=usd` to get **all** dollar rates at once.
 
 ### GET `/average`
 
 Returns the average price for a range.
 
-* `dateStart`: (Required) `DD/MM/YYYY`
-* `dateEnd`: (Required) `DD/MM/YYYY`
+* `dateStart`: (Required) `YYYY-MM-DD` (Standard ISO Date).
+* `dateEnd`: (Required) `YYYY-MM-DD` (Standard ISO Date).
 * `type`: `oficial`, `blue`, etc.
 
 ### GET `/convert`
 
 Universal currency converter.
 
-* `amount`: Float
-* `origin`: `USD`, `ARS`, `EUR`, `BRL`
-* `target`: `USD`, `ARS`, `EUR`, `BRL`
-* `type`: The dollar type to use for the rate.
+* `amount`: Float amount to convert.
+* `origin` / `target`: `USD`, `ARS`, `EUR`, `BRL`, `CLP`, `UYU`.
+* `dollar_type`: Which dollar rate to use for the conversion (e.g., `blue` vs `oficial`).
+
+---
+
+## 🧪 Testing
+
+Integration tests are available for the backend logic.
+
+```bash
+cd backend
+pytest -s
+```

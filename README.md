@@ -17,9 +17,7 @@ A high-performance, asynchronous API built with **Python** and **FastAPI** to tr
 ## 🛠️ Tech Stack
 
 - **Framework**: FastAPI
-- **HTTP Client**: HTTPX (Asynchronous)
 - **Testing**: Pytest & Pytest-asyncio
-- **Server**: Uvicorn
 
 ## ⚙️ Setup & Installation
 
@@ -27,8 +25,7 @@ A high-performance, asynchronous API built with **Python** and **FastAPI** to tr
 - Python 3.14+
 - VS Code (Recommended)
 
-### Local Environment (The .NET way)
-In Python, we use Virtual Environments instead of global NuGet packages to keep the project isolated.
+### Local Environment
 
 1. **Clone the repo:**
    ```bash

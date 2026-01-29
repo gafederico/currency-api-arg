@@ -20,9 +20,8 @@ async def test_get_average_blue():
     
     assert response.status_code == 200
     data = response.json()
-    print(data) # This helps you debug if it fails
     assert "average" in data
-    assert data["type"] == "blue" # This will now work!
+    assert data["type"] == "blue"
 
 @pytest.mark.anyio
 async def test_convert_usd_to_ars():

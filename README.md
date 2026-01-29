@@ -76,7 +76,7 @@ You need to run both the backend and frontend terminals simultaneously.
 
 ```bash
 cd backend
-# Runs on [http://127.0.0.1:8000](http://127.0.0.1:8000)
+# Runs on http://127.0.0.1:8000
 uvicorn main:app --reload
 ```
 
